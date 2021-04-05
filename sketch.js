@@ -13,7 +13,7 @@ function setup() {
   dog.scale = 0.25;
 
   db = firebase.database();
-  foodStock = db.ref("food");
+  foodStock = db.ref("Food");
   foodStock.on("value", readStock);
 
 
@@ -27,28 +27,29 @@ background(46, 139, 87);
 if(keyWentDown(UP_ARROW)){
   writeStock(foodS);
   dog.addImage(happydogImg)
+  }
 
   drawSprites();
   
-  text(writeStock, 250, 500);
-
-  }
+  textSize(20);
+  fill("yellow")
+  text("food available :" + foodS, 200, 200);
   
 
 }
 
-function readStock(){
+function readStock(data){
   foodS = data.val();
 }
 
-function writeStock(){
-  if(x<0){
+function writeStock(x){
+  if(x<=0){
     x = 0;
   }else{
-    x = x+1;
+    x = x-1;
   }
 
-  database.ref('/').update({
+  db.ref('/').update({
     Food:x
   })
 }
